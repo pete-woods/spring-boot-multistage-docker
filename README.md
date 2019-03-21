@@ -1,5 +1,7 @@
 # Demo Spring Boot app using multi-stage Docker builds, efficient Docker layers and Distroless
 
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/petewoods/spring-boot-multistage-docker.svg)
+
 ## Building
 ```
 docker build -t petewoods/spring-boot-multistage-docker .
