@@ -2,10 +2,10 @@
 
 ## Building
 ```
-docker build -t myorg/myapp .
+docker build -t petewoods/spring-boot-multistage-docker .
 ```
 
 ## Running
 ```
-docker run --rm -p 8080:8080 myorg/myapp
+docker run --rm -p 8080:8080 petewoods/spring-boot-multistage-docker
 ```
