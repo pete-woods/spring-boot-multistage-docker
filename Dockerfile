@@ -11,6 +11,13 @@ COPY src src
 RUN ./mvnw package
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
+ARG SONAR_HOST_URL
+ARG SONAR_AUTH_TOKEN
+RUN set -e; \
+    if [ "${SONAR_HOST_URL}" != "" ]; then \
+        ./mvnw sonar:sonar -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.auth.token=${SONAR_AUTH_TOKEN}; \
+    fi
+
 RUN adduser --system --home /var/cache/bootapp --shell /sbin/nologin bootapp;
 
 
