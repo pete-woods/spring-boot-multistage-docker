@@ -15,9 +15,23 @@ RUN adduser --system --home /var/cache/bootapp --shell /sbin/nologin bootapp;
 
 
 
+
+FROM golang:1.12 as golang-build
+
+WORKDIR /go/src/app
+COPY cmd cmd
+
+RUN go install -v ./...
+
+
+
+
 FROM gcr.io/distroless/java:11
 
-COPY --from=java-build /etc/passwd /etc/passwd
+COPY --from=golang-build /go/bin/healthcheck /app/healthcheck
+HEALTHCHECK --start-period=120s CMD ["/app/healthcheck"]
+
+COPY --from=java-build /etc/passwd /etc/shadow /etc/
 ARG DEPENDENCY=/app/target/dependency
 COPY --from=java-build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=java-build ${DEPENDENCY}/META-INF /app/META-INF
